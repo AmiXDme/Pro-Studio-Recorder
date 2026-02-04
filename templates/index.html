@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Audio Recorder</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="app-header">
+            <h1><i class="fas fa-microphone"></i> Audio Recorder</h1>
+            <nav>
+                <a href="/" class="nav-link active"><i class="fas fa-home"></i> Home</a>
+                <a href="/admin" class="nav-link"><i class="fas fa-cog"></i> Admin</a>
+            </nav>
+        </header>
+
+        <div class="recorder">
+            <div id="status" class="status">Press Record to Start</div>
+            <div class="waveform-container">
+                <canvas id="waveformCanvas" width="400" height="100"></canvas>
+                <div class="audio-levels">
+                    <div class="level-meter">
+                        <label>L</label>
+                        <div class="meter-bar">
+                            <div id="leftLevel" class="level-fill"></div>
+                        </div>
+                    </div>
+                    <div class="level-meter">
+                        <label>R</label>
+                        <div class="meter-bar">
+                            <div id="rightLevel" class="level-fill"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="buttons">
+                <button id="recordButton" class="record-btn">Record</button>
+                <button id="pauseButton" class="pause-btn" disabled>Pause</button>
+                <button id="stopButton" class="stop-btn" disabled>Stop</button>
+            </div>
+        </div>
+
+        <div class="playback">
+            <h2>Recordings</h2>
+            <audio id="audioPlayer" controls></audio>
+            <ul id="recordingsList"></ul>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

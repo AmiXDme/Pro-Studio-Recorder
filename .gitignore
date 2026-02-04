@@ -1,0 +1,28 @@
+# Python
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Audio Data
+recordings/*.wav
+recordings/*.webm
+recordings/temp_*
+recordings/
+
+# Environment
+.env
+.venv
+env/
+venv.bak/
+ENV/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo

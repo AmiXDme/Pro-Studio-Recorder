@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Recorder - Admin Panel</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="admin-container">
+        <header class="admin-header">
+            <h1><i class="fas fa-microphone"></i> Audio Recorder Admin Panel</h1>
+            <nav>
+                <a href="/" class="nav-link"><i class="fas fa-home"></i> Home</a>
+                <a href="/admin" class="nav-link active"><i class="fas fa-cog"></i> Admin</a>
+            </nav>
+        </header>
+
+        <div class="dashboard">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <i class="fas fa-music"></i>
+                    <h3>Total Recordings</h3>
+                    <p id="recordingsCount">Loading...</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-hdd"></i>
+                    <h3>Total Size</h3>
+                    <p id="totalSize">Loading...</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-database"></i>
+                    <h3>Disk Usage</h3>
+                    <p id="diskUsage">Loading...</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-clock"></i>
+                    <h3>Last Updated</h3>
+                    <p id="lastUpdated">Loading...</p>
+                </div>
+            </div>
+
+            <div class="admin-controls">
+                <button id="refreshBtn" class="btn btn-primary">
+                    <i class="fas fa-sync-alt"></i> Refresh Data
+                </button>
+                <button id="autoRefreshBtn" class="btn btn-secondary">
+                    <i class="fas fa-play"></i> Auto-Refresh: ON
+                </button>
+                <button id="testAudioBtn" class="btn btn-secondary">
+                    <i class="fas fa-volume-up"></i> Test Audio System
+                </button>
+                <button id="debugAudioBtn" class="btn btn-secondary">
+                    <i class="fas fa-bug"></i> Debug Audio Files
+                </button>
+                <button id="deleteAllBtn" class="btn btn-danger">
+                    <i class="fas fa-trash"></i> Delete All Recordings
+                </button>
+            </div>
+
+            <div class="recordings-table-container">
+                <h2><i class="fas fa-list"></i> Recordings Management</h2>
+                <div class="table-controls">
+                    <input type="text" id="searchInput" placeholder="Search recordings..." class="search-input">
+                    <select id="sortSelect" class="sort-select">
+                        <option value="newest">Newest First</option>
+                        <option value="oldest">Oldest First</option>
+                        <option value="name">Name A-Z</option>
+                        <option value="size">Size (Largest)</option>
+                        <option value="duration">Duration (Longest)</option>
+                    </select>
+                </div>
+                <div class="table-wrapper">
+                    <table id="recordingsTable" class="recordings-table">
+                        <thead>
+                            <tr>
+                                <th>Filename</th>
+                                <th>Duration</th>
+                                <th>Format</th>
+                                <th>Size</th>
+                                <th>Created</th>
+                                <th>Modified</th>
+                                <th style="min-width: 200px;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recordingsTableBody">
+                            <tr>
+                                <td colspan="7" class="loading">Loading recordings...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <h3><i class="fas fa-exclamation-triangle"></i> Confirm Deletion</h3>
+            <p id="deleteModalText">Are you sure you want to delete this recording?</p>
+            <div class="modal-actions">
+                <button id="confirmDelete" class="btn btn-danger">Delete</button>
+                <button id="cancelDelete" class="btn btn-secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+</body>
+</html>
