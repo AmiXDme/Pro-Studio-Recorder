@@ -9,37 +9,8 @@ A high-performance, professional-grade web application for recording, processing
 
 ---
 
-## 🏗️ System Architecture
-
-The application follows a modern client-server architecture designed for high-fidelity audio capture and reliable background processing.
-
-```mermaid
-graph TD
-    subgraph Client ["Client Side (Browser)"]
-        UI["Modern Web UI"]
-        MR["MediaRecorder API"]
-        UA["User Action: Record/Stop"]
-    end
-
-    subgraph Backend ["Backend Services (Flask)"]
-        API["Flask REST API"]
-        PROC["Audio Recovery & Processing"]
-        CONV["Pydub + FFmpeg Conversion"]
-    end
-
-    subgraph Storage ["Storage Layer"]
-        DISK[("Local Storage /recordings")]
-    end
-
-    UA --> MR
-    MR -- "WebM/Opus Stream" --> API
-    API --> PROC
-    PROC --> CONV
-    CONV -- "Lossless WAV" --> DISK
-    DISK -.-> UI
-```
-
 ---
+
 
 ## ✨ Key Features
 
@@ -62,28 +33,8 @@ graph TD
 
 ---
 
-## 🔄 Recording Workflow
-
-```mermaid
-sequenceDiagram
-    participant User
-    participant Browser
-    participant Server
-    participant FFmpeg_Pydub
-
-    User->>Browser: Starts Recording
-    Browser->>Browser: Captures Media Stream (Opus/WebM)
-    User->>Browser: Stops Recording
-    Browser->>Server: POST /upload (Audio Blob)
-    Note over Server: Processing Started
-    Server->>FFmpeg_Pydub: Load Stream + Convert to PCM
-    FFmpeg_Pydub->>Server: Return Lossless WAV
-    Server->>Server: Write to /recordings
-    Server-->>Browser: JSON Success (Metadata)
-    Browser->>User: Display New Recording
-```
-
 ---
+
 
 ## 🚀 Quick Start Guide
 

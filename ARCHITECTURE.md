@@ -4,73 +4,11 @@ This document provides a deep dive into the technical design and architectural p
 
 ---
 
-## 🗺️ Component Diagram
+---
 
-The following diagram illustrates the primary modules and their interactions within the system.
-
-```mermaid
-graph TB
-    subgraph "Frontend Architecture"
-        UI[User Interface - templates/index.html]
-        CSS[Design System - static/css/style.css]
-        JS[Logic Engine - static/js/main.js]
-        WV[Waveform Visualizer]
-        MR[Media Capture API]
-    end
-
-    subgraph "Backend Architecture"
-        FL[Flask Application - app.py]
-        RT[Route Handlers]
-        SEC[Security Middlewares]
-        STAT[System Monitoring]
-    end
-
-    subgraph "Processing Pipeline"
-        PD[Pydub Audio Interface]
-        FF[FFmpeg Transcoder]
-        VAL[Format Validator]
-    end
-
-    subgraph "Persistence"
-        FS[File System - /recordings]
-    end
-
-    UI --> JS
-    CSS --> UI
-    JS --> WV
-    JS --> MR
-    JS -- "XHR/Fetch (multipart/form-data)" --> RT
-    RT --> PD
-    RT --> SEC
-    RT --> STAT
-    PD --> FF
-    PD --> VAL
-    VAL --> FS
-    RT -- "JSON Metadata" --> JS
-```
 
 ---
 
-## ⚙️ Recording State Machine
-
-The recorder logic transitions through various states to ensure data integrity and user feedback during high-bitrate capture.
-
-```mermaid
-stateDiagram-v2
-    [*] --> Idle
-    Idle --> Recording : Start Action
-    Recording --> Paused : Pause Action
-    Paused --> Recording : Resume Action
-    Recording --> Uploading : Stop Action
-    Uploading --> Processing : Transfer Complete
-    Processing --> Conversion : pydub/ffmpeg start
-    Conversion --> Success : Write Successful
-    Conversion --> Error : Fault Detected
-    Error --> Idle : Acknowledge
-    Success --> Idle : Close
-```
-
----
 
 ## 🧪 Data Processing Pipeline
 
