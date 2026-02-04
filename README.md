@@ -1,10 +1,11 @@
-# 🎙️ Professional Audio Recorder Modern
+# 🎙️ Pro-Studio Recorder Modern
 
-[![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
-[![Flask](https://img.shields.io/badge/Flask-2.3.3-000000?style=for-the-badge&logo=flask&logoColor=white)](https://flask.palletsprojects.com/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
+![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Flask](https://img.shields.io/badge/Flask-2.3.3-000000?style=for-the-badge&logo=flask&logoColor=white)
+![FFmpeg](https://img.shields.io/badge/FFmpeg-Ready-0078D4?style=for-the-badge&logo=ffmpeg&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-4fb325?style=for-the-badge)
 
-A high-performance, professional-grade web application for recording, processing, and managing studio-quality audio directly from your browser. Optimized for both desktop and mobile workflows.
+A high-performance, professional-grade web application for recording, processing, and managing studio-quality audio directly from your browser. Optimized for both desktop and mobile workflows with zero-latency monitoring.
 
 ---
 
@@ -14,20 +15,20 @@ The application follows a modern client-server architecture designed for high-fi
 
 ```mermaid
 graph TD
-    subgraph "Client Side (Browser)"
-        UI[Modern Web UI]
-        MR[MediaRecorder API]
-        UA[User Action: Record/Stop]
+    subgraph Client ["Client Side (Browser)"]
+        UI["Modern Web UI"]
+        MR["MediaRecorder API"]
+        UA["User Action: Record/Stop"]
     end
 
-    subgraph "Backend Services (Flask)"
-        API[Flask REST API]
-        PROC[Audio Recovery & Processing]
-        CONV[Pydub + FFmpeg Conversion]
+    subgraph Backend ["Backend Services (Flask)"]
+        API["Flask REST API"]
+        PROC["Audio Recovery & Processing"]
+        CONV["Pydub + FFmpeg Conversion"]
     end
 
-    subgraph "Storage Layer"
-        DISK[(Local Storage /recordings)]
+    subgraph Storage ["Storage Layer"]
+        DISK[("Local Storage /recordings")]
     end
 
     UA --> MR
@@ -56,8 +57,8 @@ graph TD
 
 ### 📱 Seamless Mobile Integration
 - **Zero Install**: Access the recorder via local network IP.
-- **HTTPS/SSL Ready**: Built-in adhoc SSL support to enable microphone access on modern mobile browsers.
-- **Adaptive UI**: Fully responsive interface that scales from 4K monitors down to mobile screens.
+- **HTTPS/SSL Ready**: Built-in adhoc SSL support to enable microphone access on modern browsers.
+- **Adaptive UI**: Fully responsive interface that scales from 4K monitors to mobile screens.
 
 ---
 
@@ -65,21 +66,21 @@ graph TD
 
 ```mermaid
 sequenceDiagram
-    participant U as User
-    participant B as Browser
-    participant S as Server
-    participant F as FFmpeg/Pydub
+    participant User
+    participant Browser
+    participant Server
+    participant FFmpeg_Pydub
 
-    U->>B: Starts Recording
-    B->>B: Captures Media Stream (Opus/WebM)
-    U->>B: Stops Recording
-    B->>S: POST /upload (Audio Blob)
-    Note over S: Processing Started
-    S->>F: Load Stream + Convert to PCM
-    F->>S: Return Lossless WAV
-    S->>S: Write to /recordings
-    S-->>B: JSON Success (Metadata)
-    B->>U: Display New Recording
+    User->>Browser: Starts Recording
+    Browser->>Browser: Captures Media Stream (Opus/WebM)
+    User->>Browser: Stops Recording
+    Browser->>Server: POST /upload (Audio Blob)
+    Note over Server: Processing Started
+    Server->>FFmpeg_Pydub: Load Stream + Convert to PCM
+    FFmpeg_Pydub->>Server: Return Lossless WAV
+    Server->>Server: Write to /recordings
+    Server-->>Browser: JSON Success (Metadata)
+    Browser->>User: Display New Recording
 ```
 
 ---
@@ -87,11 +88,11 @@ sequenceDiagram
 ## 🚀 Quick Start Guide
 
 ### 1. Prerequisites
-- **Python 3.8+** installed on your system.
-- **FFmpeg** (Recommended for advanced audio conversion).
+- **Python 3.8+**
+- **FFmpeg** (Recommended for advanced audio conversion)
 
 ### 2. Automatic Installation (Windows)
-Simply run the included batch script to set up the environment and start the application:
+Simply run the included batch script:
 ```powershell
 ./setup_and_run.bat
 ```
@@ -126,53 +127,30 @@ audio_recorder_app_modern/
 ├── requirements.txt       # Environment Dependencies
 ├── setup_and_run.bat      # Windows Deployment Script
 ├── recordings/            # Physical Audio Storage
-├── static/                # Assets
-│   ├── css/               # Modern Glassmorphism Styles
-│   └── js/                # Recorder & UI Logic
+├── static/                # Assets (CSS/JS)
 └── templates/             # HTML5 Jinja2 Templates
 ```
 
 ---
 
-## 🛠️ Troubleshooting
-
-- **Microphone Not Found**: Ensure you are accessing via `https://`. Browsers block microphone access on insecure `http://` connections.
-- **Conversion Error**: Verify that FFmpeg is installed and added to your system PATH.
-- **Permission Denied**: Run the application as an Administrator if the `/recordings` folder cannot be created.
-
----
-
 ## 📱 Mobile Recording Guide
 
-This application is optimized for remote recording scenarios, allowing you to use your smartphone as a high-quality field recorder.
-
-### 1. Network Preparation
-Ensure both your host computer and mobile device are connected to the **same WiFi network**.
-
-### 2. Identify Host IP
-Open a terminal on your host and run:
-```bash
-ipconfig  # Windows
-# Look for 'IPv4 Address' (e.g., 192.168.1.5)
-```
-
-### 3. Mobile Access
-1. Open Chrome or Safari on your phone.
-2. Navigate to `https://<YOUR-IP-ADDRESS>:5000`.
-3. **Security Bypass**: Tap "Advanced" and then "Proceed" (Self-signed certificate).
-4. **Permissions**: Grant microphone access when prompted.
+1. **WiFi**: Connect computer and phone to the same network.
+2. **IP**: Run `ipconfig` on host to find your IP (e.g., `192.168.1.5`).
+3. **Connect**: Open browser on phone to `https://192.168.1.5:5000`.
+4. **Bypass**: Tap "Advanced" ➔ "Proceed" (SSL Warning).
 
 ---
 
 ## 🔒 Security & Privacy
 
-- **On-Device Processing**: No audio data is sent to external clouds. Everything stays on your local machine.
-- **Localhost Admin**: The dashboard is intentionally locked to the host OS to prevent network-based deletions.
+- **On-Device**: No audio is sent to external clouds.
+- **Localhost Admin**: Dashboard is locked to the host OS.
 
 ---
 
-## 🤝 Contributing & Support
+## 🤝 Contributing
 
-This project is built for simplicity and power. If you find a bug or have a feature request, please feel free to fork and submit a PR!
+This project is open-source. Feel free to fork and submit a PR!
 
 **Developed with ❤️ for High-Quality Audio Enthusiasts.**
